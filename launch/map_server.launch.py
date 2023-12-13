@@ -12,7 +12,7 @@ from ament_index_python import get_package_share_directory
 def generate_launch_description():
 
     # Package name
-    package_name = 'map_server'
+    package_name = 'vikings_bot_map_server'
 
     # Parmaters
     map_file_name_arg = DeclareLaunchArgument('map_file',
