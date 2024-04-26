@@ -21,9 +21,11 @@ def generate_launch_description():
     use_rviz_arg = DeclareLaunchArgument('use_rviz',
                                             default_value='False',
                                             description='Choose use or not use RVIZ')
+    use_sim_arg = DeclareLaunchArgument("use_sim", default_value="true")
 
     map_file_name_val = LaunchConfiguration('map_file')
     use_rviz_val = LaunchConfiguration('use_rviz')
+    use_sim = LaunchConfiguration("use_sim")
 
 
     # RVIZ node
@@ -43,7 +45,7 @@ def generate_launch_description():
                             executable='map_server',
                             name='map_server',
                             output='screen',
-                            parameters=[{'use_sim_time': True},
+                            parameters=[{'use_sim_time': use_sim},
                                         {"topic_name": "map"},
                                         {"frame_id": "map"},
                                         {'yaml_filename': map_file_path}])
@@ -54,7 +56,7 @@ def generate_launch_description():
                             executable='lifecycle_manager',
                             name='map_server_lifecycle_manager',
                             output='screen',
-                            parameters=[{'use_sim_time': True},
+                            parameters=[{'use_sim_time': use_sim},
                                         {'autostart': True},
                                         {'node_names': ['map_server']}])
                     
@@ -62,6 +64,7 @@ def generate_launch_description():
 
     return LaunchDescription([  map_file_name_arg,
                                 use_rviz_arg,
+                                use_sim_arg,
                                 LogInfo(msg=map_file_path),
                                 rviz_node,
                                 map_server_node,
