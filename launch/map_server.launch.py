@@ -19,9 +19,11 @@ def generate_launch_description():
                                             default_value='simulation_map.yaml',
                                             description='Choose real vs simulated map')
     use_rviz_arg = DeclareLaunchArgument('use_rviz',
-                                            default_value='False',
+                                            default_value="False",
                                             description='Choose use or not use RVIZ')
-    use_sim_arg = DeclareLaunchArgument("use_sim", default_value="true")
+    use_sim_arg = DeclareLaunchArgument("use_sim",
+                                            default_value="True",
+                                            description='Use simulation or real time')
 
     map_file_name_val = LaunchConfiguration('map_file')
     use_rviz_val = LaunchConfiguration('use_rviz')
@@ -35,7 +37,8 @@ def generate_launch_description():
                     name='rviz2',
                     output='screen',
                     condition=IfCondition(PythonExpression([use_rviz_val])),
-                    arguments=['-d', rviz_config]
+                    arguments=['-d', rviz_config],
+                    parameters=[{'use_sim_time': use_sim}]
                     )
     
     # Map server
