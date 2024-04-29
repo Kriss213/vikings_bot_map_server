@@ -15,6 +15,10 @@ def generate_launch_description():
     package_name = 'vikings_bot_map_server'
 
     # Parmaters
+    vikings_bot_name_arg = DeclareLaunchArgument("vikings_bot_name",
+                default_value="",
+                description="Namespace of robot - [vikings_bot_1 or vikings_bot_2]"
+    )
     map_file_name_arg = DeclareLaunchArgument('map_file',
                                             default_value='simulation_map.yaml',
                                             description='Choose real vs simulated map')
@@ -47,6 +51,7 @@ def generate_launch_description():
     map_server_node = Node(package='nav2_map_server',
                             executable='map_server',
                             name='map_server',
+                            namespace=LaunchConfiguration("vikings_bot_name"),
                             output='screen',
                             parameters=[{'use_sim_time': use_sim},
                                         {"topic_name": "map"},
@@ -58,6 +63,7 @@ def generate_launch_description():
     lifecycle_node = Node(package='nav2_lifecycle_manager',
                             executable='lifecycle_manager',
                             name='map_server_lifecycle_manager',
+                            namespace=LaunchConfiguration("vikings_bot_name"),
                             output='screen',
                             parameters=[{'use_sim_time': use_sim},
                                         {'autostart': True},
@@ -65,7 +71,8 @@ def generate_launch_description():
                     
 
 
-    return LaunchDescription([  map_file_name_arg,
+    return LaunchDescription([  vikings_bot_name_arg,
+                                map_file_name_arg,
                                 use_rviz_arg,
                                 use_sim_arg,
                                 LogInfo(msg=map_file_path),
