@@ -12,8 +12,6 @@ This package contains `vikings_bot` project map server related files and allows 
 
 Download source and install dependencies:
 ```
-cd <path/to/your/ros_ws>
-git clone git@github.com:Hercogs/vikings_bot_map_server.git src/vikings_bot_map_server
 rosdep update
 rosdep install --ignore-src --default-yes --from-path src
 ```
