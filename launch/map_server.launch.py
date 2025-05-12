@@ -51,9 +51,10 @@ def generate_launch_description():
     map_server_node = Node(package='nav2_map_server',
                             executable='map_server',
                             name='map_server',
+                            namespace=LaunchConfiguration("vikings_bot_name"),
                             output='screen',
                             parameters=[{'use_sim_time': use_sim},
-                                        {"topic_name": "/map"}, # shared map server for all robots
+                                        {"topic_name": "map"},
                                         {"frame_id": "map"},
                                         {'yaml_filename': map_file_path}])
 
